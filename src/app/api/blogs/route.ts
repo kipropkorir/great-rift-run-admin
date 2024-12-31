@@ -29,3 +29,14 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Failed to create blog' }, { status: 500 });
   }
 }
+
+
+export async function GET() {
+  try {
+    const blogs = await prisma.blog.findMany();
+    return NextResponse.json(blogs);
+  } catch (error) {
+    console.error("Error fetching blogs:", error);
+    return NextResponse.json({ error: "Failed to fetch blogs" }, { status: 500 });
+  }
+}

@@ -16,6 +16,7 @@ export async function POST(request: Request) {
       inStock: parseInt(formData.get('inStock') as string),
       color: formData.get('color') as string,
       material: formData.get('material') as string,
+      deletedAt: null, // Explicitly set deletedAt to null for new products
     };
 
     // Validate required fields
@@ -61,28 +62,30 @@ export async function POST(request: Request) {
       error: 'Failed to save product',
       details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
+  } finally {
+    await prisma.$disconnect(); // Always disconnect after operations
   }
 }
 
 export async function GET() {
   try {
-      const products = await prisma.product.findMany({
-          orderBy: {
-              createdAt: 'desc'
-          },
-          where: {
-              deletedAt: null
-          }
-      });
+    const products = await prisma.product.findMany({
+      orderBy: {
+        createdAt: 'desc'
+      },
+      where: {
+        deletedAt: null
+      }
+    });
       
-      return NextResponse.json(products);
+    return NextResponse.json(products);
   } catch (error) {
-      console.error('Failed to fetch products:', error);
-      return NextResponse.json(
-          { error: 'Failed to fetch products' },
-          { status: 500 }
-      );
+    console.error('Failed to fetch products:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch products' },
+      { status: 500 }
+    );
   } finally {
-      await prisma.$disconnect();
+    await prisma.$disconnect();
   }
 }
