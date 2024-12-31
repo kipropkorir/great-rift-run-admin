@@ -30,6 +30,8 @@ interface OrderDetail {
   items: {
     id: number;
     quantity: number;
+    size: string;
+    capacity: string;
     price: number;
     product: {
       name: string;
@@ -245,7 +247,11 @@ const OrderDetails = ({ id }: { id: string }) => {
                 />
                 <div className="flex-1 ml-4">
                   <h4 className="font-semibold">{item.product.name}</h4>
-                  <p>Quantity: {item.quantity}</p>
+                  <div className="flex items-center justify-start">
+                    <span className="mr-2 py-2">Quantity: {item.quantity}</span>
+                    <span className="mr-2 py-2">Capacity: {item.capacity}</span>
+                    <span className="mr-2 py-2">Size: {item.size}</span>
+                  </div>
                 </div>
                 <p className="font-semibold">
                   Ksh{item.price.toLocaleString()}
