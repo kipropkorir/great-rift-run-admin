@@ -28,6 +28,7 @@ export default function AddProduct() {
         images: [],
         imageFiles: [],
     });
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = (
         e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -69,6 +70,7 @@ export default function AddProduct() {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        setIsSubmitting(true);
         
         const formDataToSend = new FormData();
         
@@ -110,6 +112,8 @@ export default function AddProduct() {
             }
         } catch (error) {
             alert(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -239,9 +243,14 @@ export default function AddProduct() {
             </div>
             <button
                 type="submit"
-                className="w-full bg-blue-500 text-white py-2 rounded shadow hover:bg-blue-600 focus:outline-none"
+                disabled={isSubmitting}
+                className={`w-full py-2 rounded shadow focus:outline-none transition-colors duration-200 ${
+                    isSubmitting 
+                    ? 'bg-gray-400 cursor-not-allowed' 
+                    : 'bg-blue-500 hover:bg-blue-600'
+                } text-white`}
             >
-                Add Product
+                {isSubmitting ? 'Adding Product...' : 'Add Product'}
             </button>
         </form>
     );
