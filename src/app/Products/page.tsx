@@ -141,7 +141,7 @@ export default function Products() {
           <div className="col-span-1 flex items-center">
             <p className="font-medium">Price</p>
           </div>
-          <div className="col-span-2 flex items-center">
+          <div className="col-span-1 flex items-center">
             <p className="font-medium">Stock</p>
           </div>
           <div className="col-span-1 flex items-center">
@@ -185,7 +185,7 @@ export default function Products() {
                   Ksh{product.price}
                 </p>
               </div>
-              <div className="col-span-2 flex items-center">
+              <div className="col-span-1 flex items-center">
                 <p className="text-body-sm font-medium text-dark">
                   {product.inStock}
                 </p>
